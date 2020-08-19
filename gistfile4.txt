@@ -1,0 +1,33 @@
+/* Option 4:
+ * Ask users to enter a search keyword. 
+ * You will then search the keyword in the file (option 1) and display success or failure message
+ */
+ 
+import java.io.*;
+import java.util.*;
+
+public class Option4 {
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("userinfo.txt"));
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter a search keyword: ");
+		String searchWord = sc.next();
+		boolean exists = false;
+		String line = "";
+		
+		while ((line = br.readLine()) != null) {
+			line = line.toLowerCase();
+			if (line.contains(searchWord)) {
+				exists = true;
+				break;
+			}
+		}
+		
+		String found = exists ? "exists." : "is not found.";
+		System.out.println("The search keyword " + found);
+		
+		br.close();
+		sc.close();
+	}
+}

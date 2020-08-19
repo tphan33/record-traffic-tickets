@@ -1,0 +1,100 @@
+/* Option 6: Replace function. 
+ * Ask users to replace ticket type and generate a new file with new ticket type. 
+ * Please keep rest of the information same as it is. 
+ */
+ 
+import java.io.*;
+
+import java.util.Scanner;
+
+public class Option6 {
+	public static void main(String[] args) throws IOException {
+
+		String pathToFile = "userinfo.txt";
+		Scanner sc = new Scanner(System.in);
+		option6(sc, pathToFile);
+		sc.close();
+	}
+
+	public static void option6(Scanner sc, String pathToFile) {
+
+		System.out.println("\nEnter Ticket Type Replacement value:");
+		String newTicketType = sc.nextLine();
+
+		// Get ticket file
+		try {
+			String[] recds = replaceTicket(pathToFile, newTicketType, 1000);
+
+			// overlay/re-write ticket file using updated ticket array
+			writeFile(pathToFile, recds);
+			System.out.println("Ticket Type updated.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception: " + e.getMessage() + " encountered with option6");
+		}
+
+		return;
+	}
+
+	private static String[] replaceTicket(String pathToFile, String newTicket, int maxPossibleTickets)
+			throws Exception {
+		BufferedReader br = null;
+
+		try {
+			// Create a sparse array
+			String[] recds = new String[maxPossibleTickets];
+			int idx = 0;
+
+			br = new BufferedReader(new FileReader(pathToFile));
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (idx < maxPossibleTickets) {
+					// Split the line up into fields using comma as delimiter
+					String[] parts = line.split(",");
+					String name = parts[0];
+					// Replace ticket
+					String ticket = newTicket;
+					String amount = parts[2];
+
+					recds[idx] = name + "," + ticket + "," + amount;
+					idx++;
+				} else {
+					throw new Exception("Max Possible Tickets Reached!");
+				}
+
+			}
+			// Trim sparse Array
+			String[] newArray = new String[idx];
+			if (idx > 0) {
+				System.arraycopy(recds, 0, newArray, 0, idx);
+			}
+			
+			return newArray;
+			
+		} finally {
+			if (br != null) {
+				br.close();
+			}
+		}
+	}
+
+	private static void writeFile(String pathToFile, String[] recds) throws IOException {
+
+		PrintWriter outputStream = null;
+		try {
+
+			outputStream = new PrintWriter(new FileWriter(pathToFile));
+
+			for (String cur : recds) {
+				outputStream.println(cur);
+			}
+
+		} finally {
+			if (outputStream != null) {
+				outputStream.close();
+			}
+		}
+
+	}
+}

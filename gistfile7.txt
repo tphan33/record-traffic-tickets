@@ -1,0 +1,34 @@
+/* Option 7: Delete all the files from hard drive
+ */
+ 
+import java.io.*;
+
+
+public class Option7 {
+    public static void main(String[] args) throws IOException {
+
+        String pathToUnSortedFile = "userinfo.txt";
+        String pathToSortedFile = "sortedname.txt";
+        option7(pathToUnSortedFile, pathToSortedFile);
+    }
+
+    public static void option7(String pathToUnSortedFile, String pathToSortedFile) {
+
+        System.out.println("\nDeleting Files Created!");
+
+        File file1 = new File(pathToUnSortedFile);
+        if (file1.delete()) {
+            System.out.println("File Deleted:" + pathToUnSortedFile);
+        } else {
+            System.out.println("File:" + pathToUnSortedFile + " not found to delete.");
+        }
+
+        File file2 = new File(pathToSortedFile);
+        if (file2.delete()) {
+            System.out.println("File Deleted:" + pathToSortedFile);
+        } else {
+            System.out.println("File:" + pathToSortedFile + " not found to delete.");
+        }
+
+    }
+}

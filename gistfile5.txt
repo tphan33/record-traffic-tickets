@@ -1,0 +1,31 @@
+/* Option 5: Use the array concept and read the person name from the file. 
+ * Just view the entire array on the output screen.
+ */
+ 
+import java.io.*;
+
+public class Option5 {
+    public static void main(String[] args) throws IOException {
+
+        String pathToFile = "userinfo.txt";
+        option5(pathToFile);
+    }
+
+    public static void option5(String pathToFile) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new FileReader(pathToFile));
+        String line;
+        
+        while ((line = br.readLine()) != null) {
+            // Split the line up into fields using comma as delimiter 
+            String[] parts = line.split(",");
+            String name = parts[0]; 
+            String ticket = parts[1]; 
+            String amount = parts[2]; 
+            
+            // only print name
+            System.out.println(name);
+        }
+        br.close();
+    }
+}

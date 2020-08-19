@@ -1,0 +1,71 @@
+/* Option 1: Ask users to input Person Name, Ticket Type and Fine. 
+ * You will keep asking users until they press q key. 
+ * Once user types Q, you will store all the details into the .txt file or any other file
+ */
+
+import java.io.*;
+import java.util.Scanner;
+
+public class Option1 {
+	public static void main(String args[]) throws IOException {
+		File fw = new File("userinfo.txt");
+		PrintWriter pw = new PrintWriter(fw);
+		Scanner sc = new Scanner(System.in);
+
+		boolean shouldGetNext;
+		do {
+			shouldGetNext = getInput(pw, sc);
+		} while (shouldGetNext);
+
+		pw.close();
+		sc.close();
+
+		System.out.print("You are done.");
+		return;
+	}
+
+	private static boolean getInput(PrintWriter pw, Scanner sc) {
+		String name = "";
+		String ticket = "";
+
+		System.out.print("What is your name? ");
+		name = sc.next();
+		if (name.equalsIgnoreCase("q")) {
+			return false;
+		}
+		pw.print(name);
+
+		System.out.print("What is your ticket type? ");
+		ticket = sc.next();
+		if (ticket.equalsIgnoreCase("q")) {
+			return false;
+		}
+		pw.print("," + ticket);
+
+		String whatToDo; // variable declaration
+		do {
+			whatToDo = getFineAmount(pw, sc);
+		} while (whatToDo.equals("fail"));
+
+		// Should not get next if getFineAmount says "quit".
+		// So return the opposite of "quit"
+		return !whatToDo.equals("quit");
+	}
+
+	private static String getFineAmount(PrintWriter pw, Scanner sc) {
+		double fine = 0;
+		String fineInput;
+		try {
+			System.out.print("What is the fine amount? ");
+			fineInput = sc.next();
+			if (fineInput.equalsIgnoreCase("q")) {
+				return "quit";
+			}
+			fine = Double.parseDouble(fineInput);
+			pw.println("," + fine);
+		} catch (NumberFormatException ex) {
+			return "fail";
+		}
+		return "pass";
+	}
+}

@@ -1,0 +1,18 @@
+/* Option 3: Display file
+ * You will read entire file from option 1 and display it on the screen. 
+ * I would like to see everything as comma separated. 
+ * You also need to use exception handling here.
+ */
+
+import java.io.*;
+
+public class Option3 {
+	 public static void main(String[] args) throws IOException  {
+	       
+	    BufferedReader br = new BufferedReader(new FileReader("userinfo.txt"));
+	           String line;
+	           while((line = br.readLine())!= null){
+	               System.out.println(line);
+	           }
+	           br.close();
+	    }
